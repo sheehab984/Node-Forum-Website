@@ -1,0 +1,230 @@
+<%- include('components/head'); -%>
+    <%- include('components/navbar'); -%>
+    <style>.postinfobot .posted {
+            width: 500px;
+            margin-left: 18px;
+            font-size: 12px;
+            color: #bdc3c7;
+            font-family: 'Open Sans Regular', sans-serif;
+        }</style>
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 breadcrumbf">
+                        <a href="#">General Discussion</a>
+                        <span class="diviver">&gt;</span>
+                        <a href="#">Topic Details</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+
+                        <!-- POST -->
+                        <div class="post beforepagination">
+                            <div class="topwrap">
+                                <div class="userinfo pull-left">
+                                    <div class="avatar">
+                                        <img src="images/avatar.jpg" alt="" />
+                                        <div class="status green">&nbsp;</div>
+                                    </div>
+
+                                </div>
+                                <div class="posttext pull-left">
+                                    <h2>
+                                        <%= res.posts[0].title %>
+                                    </h2>
+                                    <p>
+                                        <%= res.posts[0].content %>
+                                    </p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="postinfobot">
+
+                                <div class="likeblock pull-left">
+                                    <a href="/pvote/like/<%= pid%>/<%= selected%>" class="up">
+                                        <i class="fa fa-thumbs-o-up"></i>
+                                        <%= p_like%>
+                                    </a>
+                                    <a href="/pvote/dislike/<%= pid%>/<%= selected%>" class="down">
+                                        <i class="fa fa-thumbs-o-down"></i>
+                                        <%= p_dislike%>
+                                    </a>
+                                </div>
+                                <div class="posted pull-left">
+                                    <i class="fa fa-clock-o"></i>
+                                    <%= res.posts[0].time %> BY <%= res.posts[0].username %>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <!-- POST -->
+
+                        <div class="paginationf">
+                            <div class="pull-left">
+                                <a href="#" class="prevnext">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </div>
+                            <div class="pull-left">
+                                <ul class="paginationforum">
+                                    <% for(var i = 1; i <= count; i++){ %>
+                                        <li class="hidden-xs">
+                                            <%if(i == selected){%>
+                                                <a href="/post?id=<%= pid %>&p=<%= i %>" class="active">
+                                                    <%= i %>
+                                                </a>
+                                                <%} else{%>
+                                                    <a href="/post?id=<%= pid %>&p=<%= i %>">
+                                                        <%= i %>
+                                                    </a>
+                                                    <% } %>
+                                        </li>
+                                        <% } %>
+                                </ul>
+                            </div>
+                            <div class="pull-left">
+                                <a href="#" class="prevnext last">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <% for(var i = 0; i < res.replys.length; i++){ %>
+                            <!-- POST -->
+                            <div class="post">
+                                <div class="topwrap">
+                                    <div class="userinfo pull-left">
+                                        <div class="avatar">
+                                            <img src="images/avatar2.jpg" alt="" />
+                                            <div class="status red">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="posttext pull-left">
+                                        <p>
+                                            <%= res.replys[i].content %>
+                                        </p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="postinfobot">
+
+                                    <div class="likeblock pull-left">
+                                        <a href="/rvote/like/<%= pid %>/<%= res.replys[i].id%>/<%= selected %>" class="up">
+                                            <i class="fa fa-thumbs-o-up"></i>
+                                            <%for(var j=0;j < r_like_count.length;j++) {%>
+                                                <%if(r_like_count[j].id == res.replys[i].id) { %>
+                                                    <%if(!r_like_count[j].count){%>
+                                                        0
+                                                        <%}%>
+                                                            <% if(r_like_count[j].count){ %>
+                                                                <%= r_like_count[j].count %>
+                                                                    <% } %>
+                                                                        <%}%>
+                                                                            <%}%>
+                                        </a>
+                                        <a href="/rvote/dislike/<%= pid %>/<%= res.replys[i].id%>/<%= selected %>" class="down">
+                                            <i class="fa fa-thumbs-o-down"></i>
+                                            <%for(var j=0;j < r_dislike_count.length;j++) {%>
+                                                <%if(r_dislike_count[j].id == res.replys[i].id) { %>
+                                                    <%if(!r_dislike_count[j].count){%>
+                                                        0
+                                                        <%}%>
+                                                            <% if(r_dislike_count[j].count){ %>
+                                                                <%= r_dislike_count[j].count %>
+                                                                    <% } %>
+                                                                        <%}%>
+                                                                            <%}%>
+                                        </a>
+                                    </div>
+                                    <div class="posted pull-left">
+                                        <i class="fa fa-clock-o"></i>
+                                        <%= res.replys[i].time %> BY <%= res.replys[i].username %>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <!-- POST -->
+                            <% }%>
+                                <!-- POST -->
+                                <div class="post">
+                                    <form action="/reply/<%= pid%>" class="form" method="post">
+                                        <div class="topwrap">
+                                            <div class="userinfo pull-left">
+                                                <div class="avatar">
+                                                    <img src="images/avatar4.jpg" alt="" />
+                                                    <div class="status red">&nbsp;</div>
+                                                </div>
+                                            </div>
+                                            <div class="posttext pull-left">
+                                                <div class="textwraper">
+                                                    <div class="postreply">Post a Reply</div>
+                                                    <textarea name="reply" id="reply" placeholder="Type your message here"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="postinfobot">
+                                            <div class="pull-right postreply">
+                                                <div class="pull-left smile">
+                                                    <a href="#">
+                                                        <i class="fa fa-smile-o"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="pull-left">
+                                                    <button type="submit" class="btn btn-primary">Post Reply</button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- POST -->
+                    </div>
+                    <%- include('components/category'); -%>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="pull-left">
+                            <a href="#" class="prevnext">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        </div>
+                        <div class="pull-left">
+                            <ul class="paginationforum">
+                                <% for(var i = 1; i <= count; i++){ %>
+                                    <li class="hidden-xs">
+                                        <%if(i == selected){%>
+                                            <a href="/post?id=<%= pid %>&p=<%= i %>" class="active">
+                                                <%= i %>
+                                            </a>
+                                            <%} else{%>
+                                                <a href="/post?id=<%= pid %>&p=<%= i %>">
+                                                    <%= i %>
+                                                </a>
+                                                <% } %>
+                                    </li>
+                                    <% } %>
+                            </ul>
+                        </div>
+                        <div class="pull-left">
+                            <a href="#" class="prevnext last">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <%- include('components/footer'); -%>

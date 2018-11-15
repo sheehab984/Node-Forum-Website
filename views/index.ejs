@@ -1,0 +1,126 @@
+<%- include('components/head'); -%>
+<%- include('components/navbar'); -%>
+            <section class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-12 col-md-8">
+                            <div class="pull-left">
+                                <a href="#" class="prevnext">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </div>
+                            <div class="pull-left">
+                                <ul class="paginationforum">
+                                    <% for(var i = 1; i <= count; i++){ %>
+                                        <li class="hidden-xs">
+                                            <%if(i == selected){%>
+                                                <a href="/home?p=<%= i %>" class="active">
+                                                    <%= i %>
+                                                </a>
+                                                <%} else{%>
+                                                    <a href="/home?p=<%= i %>">
+                                                        <%= i %>
+                                                    </a>
+                                                <% } %>
+                                        </li>
+                                        <% } %>
+                                </ul>
+                            </div>
+                            <div class="pull-left">
+                                <a href="#" class="prevnext last">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8">
+                            <!-- POST -->
+                            <% for(var i = 0; i < result.length; i++){ %>
+                                <div class="post">
+                                    <div class="wrap-ut pull-left">
+                                        <div class="userinfo pull-left">
+                                            <div class="avatar">
+                                                <img src="images/avatar.jpg" alt="" />
+                                                <div class="status green">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                        <div class="posttext pull-left">
+                                            <h2>
+                                                <a href="/post?id=<%= result[i].id%>">
+                                                    <%= result[i].title %>
+                                                </a>
+                                            </h2>
+                                            <p>
+                                                <%= result[i].content.substring(0,result[i].content.length/2.5) %>...
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="postinfo pull-left">
+                                        <div class="comments">
+                                            <div class="commentbg">
+                                                0
+                                                <div class="mark"></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="views">
+                                            <i class="fa fa-eye"></i>
+                                            <%= result[i].views%>
+                                        </div>
+                                        <div class="time">
+                                            <i class="fa fa-clock-o"></i>
+                                            <%= result[i].time%>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <!-- POST -->
+                                <% } %>
+                        </div>
+                        <%- include('components/category'); -%>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-xs-12">
+                            <div class="pull-left">
+                                <a href="#" class="prevnext">
+                                    <i class="fa fa-angle-left"></i>
+                                </a>
+                            </div>
+                            <div class="pull-left">
+                                <ul class="paginationforum">
+                                    <% for(var i = 1; i <= count; i++){ %>
+                                        <li class="hidden-xs">
+                                            <%if(i == selected){%>
+                                                <a href="/home?p=<%= i %>" class="active">
+                                                    <%= i %>
+                                                </a>
+                                                <%} else{%>
+                                                    <a href="/home?p=<%= i %>">
+                                                        <%= i %>
+                                                    </a>
+                                                    <% } %>
+                                        </li>
+                                        <% } %>
+                                </ul>
+                            </div>
+                            <div class="pull-left">
+                                <a href="#" class="prevnext last">
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+            <%- include('components/footer'); -%>
